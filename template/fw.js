@@ -20,7 +20,7 @@ let fw = (function () {
 
             if (val) {
 
-                let html = '<span>time: <input id=\"ds_slide_' + val + '\" type=\"range\" value=\"0\"></span><br>',
+                let html = '<span>'+ val+': <input id=\"ds_slide_' + val + '\" type=\"range\" value=\"0\"></span><br>',
                 el = document.createElement('div');
 
                 el.innerHTML = html;

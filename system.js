@@ -1,6 +1,6 @@
 ds.setup({
 
-    maxFrame : 50,
+    maxFrame : 75,
 
     w : 32,
     h : 32,

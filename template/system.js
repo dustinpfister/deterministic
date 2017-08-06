@@ -1,8 +1,8 @@
 fw.setup({
 
     maxFrame : 50,
-	canvasWidth: 640,
-	canvasHeight: 480,
+    canvasWidth : 320,
+    canvasHeight : 240,
 
     sw : 32,
     sh : 32,

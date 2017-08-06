@@ -101,6 +101,10 @@ let fw = (function () {
 
             system = sys;
 
+            state.maxFrame = sys.maxFrame || 50;
+
+            console.log(state.maxFrame);
+
             setupCanvas(sys.canvasWidth || 320, sys.canvasHeight || 240);
 
             // inject build in time control slider
@@ -108,13 +112,12 @@ let fw = (function () {
 
                 time : function (e) {
 
-                    console.log('time');
+                    let per = e.target.value / 100;
 
-                    state.per = e.target.value / 100;
+                    state.frame = Math.floor(per * state.maxFrame);
 
+                    state.per = state.frame / state.maxFrame;
                     state.bias = 1 - Math.abs(.5 - state.per) / .5;
-
-                    state.frame = Math.floor(state.per * state.maxFrame);
 
                 }
 

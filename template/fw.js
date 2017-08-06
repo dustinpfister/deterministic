@@ -6,7 +6,80 @@
 
 let fw = (function () {
 
-    let api = {
+    let canvas,
+    ctx,
+    system = {
+
+        forFrame : function () {
+            console.log('system does not have a forFrame method');
+        }
+
+    },
+    state = {
+
+        frame : 0,
+        per : 0,
+        bias : 0,
+        maxFrame : 50
+
+    },
+
+    // setup the canvas
+    setupCanvas = function (w, h) {
+
+        canvas = api.get('ds_canvas');
+        ctx = canvas.getContext('2d');
+
+        canvas.width = w;
+        canvas.height = h;
+
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    },
+
+    // inject a range control interface for a value
+    injectControl = function (val) {
+
+        if (val) {
+
+            let html = '<span>' + val + ': <input id=\"ds_slide_' + val + '\" type=\"range\" value=\"0\"></span><br>',
+            el = document.createElement('div');
+
+            el.innerHTML = html;
+
+            api.get('ds_control').appendChild(el);
+
+        }
+
+    },
+
+    setupControls = function (controls) {
+
+        for (con in controls) {
+
+            injectControl(con);
+
+            (function (method) {
+
+                api.get('ds_slide_' + con).addEventListener('input', function (e) {
+
+                    method(e, system, state);
+
+                    system.forFrame(state);
+                    system.draw(canvas, ctx);
+
+                });
+
+            }
+                (controls[con]));
+
+        }
+
+    },
+
+    // the pubic api
+    api = {
 
         // simple get element method
         get : function (id) {
@@ -15,19 +88,42 @@ let fw = (function () {
 
         },
 
-        // inject a range control interface for a value
-        injectControl : function (val) {
+        // clear screen
+        cls : function () {
 
-            if (val) {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                let html = '<span>'+ val+': <input id=\"ds_slide_' + val + '\" type=\"range\" value=\"0\"></span><br>',
-                el = document.createElement('div');
+        },
 
-                el.innerHTML = html;
+        // setup the framework with the given system
+        setup : function (sys) {
 
-                this.get('ds_control').appendChild(el);
+            system = sys;
 
-            }
+            setupCanvas(320, 240);
+
+            // inject build in time control slider
+            setupControls({
+
+                time : function (e) {
+
+                    console.log('time');
+
+                    state.per = e.target.value / 100;
+
+                    state.bias = 1 - Math.abs(.5 - state.per) / .5;
+
+                    state.frame = Math.floor(state.per * state.maxFrame);
+
+                }
+
+            });
+
+            setupControls(system.controls);
+			
+			system.forFrame(state);
+			system.draw(canvas,ctx);
 
         }
 

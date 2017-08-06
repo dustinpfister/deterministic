@@ -4,7 +4,7 @@
  *
  */
 
-let fw = (function () {
+let ds = (function () {
 
     // canvas
     let canvas,

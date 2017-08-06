@@ -1,4 +1,4 @@
-fw.setup({
+ds.setup({
 
     maxFrame : 50,
 
@@ -18,7 +18,7 @@ fw.setup({
     // draw the state of the box to the canvas
     draw : function (canvas, ctx) {
 
-        fw.cls();
+        ds.cls();
 
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(this.x, this.y, this.w, this.h);

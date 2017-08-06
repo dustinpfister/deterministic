@@ -1,3 +1,3 @@
-# Deterministic Systems Demos
+# Deterministic
 
-This is a repository of some demos of deterministic systems.
+This is a frame

@@ -135,7 +135,11 @@ let fw = (function () {
             });
 
             // set up custom controls
-            setupControls(system.controls);
+            if (system.controls) {
+
+                setupControls(system.controls);
+
+            }
 
             update();
 

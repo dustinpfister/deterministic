@@ -1,21 +1,17 @@
 fw.setup({
 
     maxFrame : 50,
-    canvasWidth : 320,
-    canvasHeight : 240,
 
-    sw : 32,
-    sh : 32,
+    w : 32,
+    h : 32,
+    dy : 0,
 
     // what to find an a for frame basis
     forFrame : function (state) {
 
-        this.w = this.sw;
-        this.h = this.sh;
-
         // what will change for each frame
         this.x = (320 - this.w) * state.bias;
-        this.y = 20;
+        this.y = 10 + this.dy * state.per;
 
     },
 
@@ -33,12 +29,9 @@ fw.setup({
     controls : {
 
         // change start size
-        size : function (e, sys, state) {
+        dy : function (e, sys, state) {
 
-            let size = e.target.value / 100 * 64 + 32;
-
-            sys.sw = size;
-            sys.sh = size;
+            sys.dy = e.target.value / 100 * 190;
 
         }
 

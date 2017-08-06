@@ -26,6 +26,7 @@ let fw = (function () {
 
     },
 
+    // the curent state values that are used in the systems forFrame method
     state = {
 
         frame : 0,
@@ -65,18 +66,24 @@ let fw = (function () {
 
     },
 
+    // setup controls by injecting a slider, and setting up an event hander for it
     setupControls = function (controls) {
 
+        // for all controls in the given object
         for (con in controls) {
 
+            // inject an input element for it
             injectControl(con);
 
+            // the event hander for the control
             (function (method) {
 
                 api.get('ds_slide_' + con).addEventListener('input', function (e) {
 
+                    // call the method
                     method(e, system, state);
 
+                    // update the system
                     update();
 
                 });
@@ -99,9 +106,9 @@ let fw = (function () {
         },
 
         // clear screen
-        cls : function () {
+        cls : function (style) {
 
-            ctx.fillStyle = '#000000';
+            ctx.fillStyle = style || '#000000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         },
@@ -125,8 +132,8 @@ let fw = (function () {
 
                     let per = e.target.value / 100;
 
+                    // set frame, per, and bias when time slider changes.
                     state.frame = Math.floor(per * state.maxFrame);
-
                     state.per = state.frame / state.maxFrame;
                     state.bias = 1 - Math.abs(.5 - state.per) / .5;
 
@@ -141,6 +148,7 @@ let fw = (function () {
 
             }
 
+            // update for the first time
             update();
 
         }

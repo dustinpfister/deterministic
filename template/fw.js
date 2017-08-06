@@ -101,7 +101,7 @@ let fw = (function () {
 
             system = sys;
 
-            setupCanvas(320, 240);
+            setupCanvas(sys.canvasWidth || 320, sys.canvasHeight || 240);
 
             // inject build in time control slider
             setupControls({
@@ -121,9 +121,9 @@ let fw = (function () {
             });
 
             setupControls(system.controls);
-			
-			system.forFrame(state);
-			system.draw(canvas,ctx);
+
+            system.forFrame(state);
+            system.draw(canvas, ctx);
 
         }
 

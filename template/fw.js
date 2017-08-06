@@ -6,15 +6,26 @@
 
 let fw = (function () {
 
+    // canvas
     let canvas,
     ctx,
+
+    // the system object
     system = {
 
-        forFrame : function () {
-            console.log('system does not have a forFrame method');
-        }
+        forFrame : function () {},
+        draw : function () {}
 
     },
+
+    // update, and draw
+    update = function () {
+
+        system.forFrame(state);
+        system.draw(canvas, ctx);
+
+    },
+
     state = {
 
         frame : 0,
@@ -66,8 +77,7 @@ let fw = (function () {
 
                     method(e, system, state);
 
-                    system.forFrame(state);
-                    system.draw(canvas, ctx);
+                    update();
 
                 });
 
@@ -99,12 +109,13 @@ let fw = (function () {
         // setup the framework with the given system
         setup : function (sys) {
 
+            // ref the given sys object
             system = sys;
 
+            // set maxFrame
             state.maxFrame = sys.maxFrame || 50;
 
-            console.log(state.maxFrame);
-
+            // setup the canvas
             setupCanvas(sys.canvasWidth || 320, sys.canvasHeight || 240);
 
             // inject build in time control slider
@@ -123,10 +134,10 @@ let fw = (function () {
 
             });
 
+            // set up custom controls
             setupControls(system.controls);
 
-            system.forFrame(state);
-            system.draw(canvas, ctx);
+            update();
 
         }
 

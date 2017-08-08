@@ -84,6 +84,7 @@ let ds = (function () {
                     method(e, system, state);
 
                     // update the system
+                    system.init();
                     update();
 
                 });
@@ -130,18 +131,19 @@ let ds = (function () {
             setupCanvas(sys.canvasWidth || 320, sys.canvasHeight || 240);
 
             // inject build in time control slider
-            setupControls({
+            injectControl('time');
+            api.get('ds_slide_time').addEventListener('input', function (e) {
 
-                time : function (e) {
+                // call the method
+                let per = e.target.value / 100;
 
-                    let per = e.target.value / 100;
+                // set frame, per, and bias when time slider changes.
+                state.frame = Math.floor(per * state.maxFrame);
+                state.per = state.frame / state.maxFrame;
+                state.bias = 1 - Math.abs(.5 - state.per) / .5;
 
-                    // set frame, per, and bias when time slider changes.
-                    state.frame = Math.floor(per * state.maxFrame);
-                    state.per = state.frame / state.maxFrame;
-                    state.bias = 1 - Math.abs(.5 - state.per) / .5;
-
-                }
+                // just update
+                update();
 
             });
 
@@ -152,7 +154,14 @@ let ds = (function () {
 
             }
 
+            if (system.init === undefined) {
+
+                system.init = function () {};
+
+            }
+
             // update for the first time
+            system.init();
             update();
 
         }

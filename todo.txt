@@ -1,6 +1,7 @@
 1.x
 
 * Make a reference to the current system in the public API
+* Add support for a init method for the System Object that is only called once when starting for the first time or when the initial state changes, but not when time changes.
+
 * set default values for sliders
 * add playback, and loop controls.
-* Add support for a init method for the System Object that is only called once when starting for the first time or when the initial state changes, but not when time changes.

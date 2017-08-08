@@ -2,16 +2,34 @@ ds.setup({
 
     maxFrame : 75,
 
-    w : 32,
-    h : 32,
-    dy : 0,
+    spacing : 0,
+    bx : [],
+
+    init : function () {
+
+        this.bx = [];
+
+        let i = 0;
+        while (i < 3) {
+
+            let box = {};
+            box.x = i * 32 + this.spacing * i;
+            box.y = 0;
+            box.w = 32;
+            box.h = 32;
+
+            this.bx.push(box);
+            i += 1;
+
+        }
+
+        console.log('init');
+    },
 
     // what to find an a for frame basis
     forFrame : function (state) {
 
-        // what will change for each frame
-        this.x = (320 - this.w) * state.bias;
-        this.y = 10 + this.dy * state.per;
+        console.log('frame');
 
     },
 
@@ -20,8 +38,12 @@ ds.setup({
 
         ds.cls();
 
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(this.x, this.y, this.w, this.h);
+        this.bx.forEach(function (bx) {
+
+            ctx.fillStyle = '#ff00ff';
+            ctx.fillRect(bx.x, bx.y, bx.w, bx.h)
+
+        });
 
     },
 
@@ -29,9 +51,9 @@ ds.setup({
     controls : {
 
         // change start size
-        dy : function (e, sys, state) {
+        spacing : function (e, sys, state) {
 
-            sys.dy = e.target.value / 100 * 190;
+            sys.spacing = e.target.value / 100 * 32;
 
         }
 

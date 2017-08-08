@@ -98,6 +98,9 @@ let ds = (function () {
     // the pubic api
     api = {
 
+        // reference to system
+        system : system,
+
         // simple get element method
         get : function (id) {
 
@@ -118,6 +121,7 @@ let ds = (function () {
 
             // ref the given sys object
             system = sys;
+            this.system = system;
 
             // set maxFrame
             state.maxFrame = sys.maxFrame || 50;
